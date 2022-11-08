@@ -48,7 +48,7 @@
       </div>
       <div class="three">
         <p>Invoice Date</p>
-        <h3>{{datas.createdAt}}</h3>
+        <h3>{{datess(datas.createdAt)}}</h3>
       </div>
       <div class="four">
         <p>Bill To</p>
@@ -64,7 +64,7 @@
       </div>
       <div class="six">
         <p>Payment Due</p>
-        <h3>{{datas.paymentDue}}</h3>
+        <h3>{{ datess(datas.paymentDue)}}</h3>
       </div>
       <div class="calc">
         <div class="banner" v-for="(item, i) in datas.items" :key="i">
@@ -111,14 +111,6 @@
 
 <script>
 export default {
-  data() {
-    return {
-      datas: [],
-      clientAddress: {},
-      senderAddress: {},
-      id: this.$route.params.id
-    }
-  },
   mounted() {
      const x = this.$store.getters.getTodoById(this.id)
      this.datas = this.$store.getters.getTodoById(this.id)
@@ -129,7 +121,29 @@ export default {
 
      console.log(this.clientAddress)
   },
+
+  data() {
+    return {
+      datas: [],
+      clientAddress: {},
+      senderAddress: {},
+      id: this.$route.params.id
+    }
+  },
+ 
   methods: {
+    datess(due) {
+      var mths = ['Jan','Feb','March','April','May','June','July','August','Sept','Oct','Nov','Dec']
+      console.log(typeof(due))
+      if(due){
+      const rep = due.replace(/-/g,'')
+      let ars = rep.substring(4,6)
+      let ars1 = due.split('-').reverse()
+
+      let date = ars1[0]+' '+mths[ars - 1]+' '+ars1[2]
+      return date
+      }
+    },
     backBtn() {
       this.$router.go(-1)
     },

@@ -3,8 +3,8 @@
     <div class="bdy" v-for="invs in dones" :key="invs.id">
       <router-link :to="{ name: 'details', params: { id: invs.id } }">
       <div class="pos">
-        <p class="id">#{{invs.id}}</p> <span>Due {{invs.paymentDue}}</span> 
-        <span>{{invs.clientName}}</span> <p class="total">${{invs.total}}</p>
+        <p class="id">#{{invs.id}}</p> <span>Due  {{dates(invs.paymentDue)}}</span> 
+        <span>{{invs.clientName}}</span> <p class="total">${{invs.total.toLocaleString()}}</p>
         <p class="p status" :class="{paid: invs.status === 'paid', pending: invs.status === 'pending', draft: invs.status === 'draft'}">
           <span :class="{paid: invs.status === 'paid', pending: invs.status === 'pending', draft: invs.status === 'draft'}"></span> 
           {{invs.status}}</p>
@@ -12,7 +12,7 @@
       </div>
       <div class="small">
         <div class="sml1">
-          <p>#{{invs.id}}</p> <span>Due {{invs.paymentDue}}</span> <p>${{invs.total}}</p>
+          <p>#{{invs.id}}</p> <span>Due {{ dates(invs.paymentDue)}}</span> <p>${{invs.total.toLocaleString()}}</p>
         </div>
         <div class="sml2">
           <span>{{invs.clientName}}</span>
@@ -36,18 +36,35 @@ export default {
   mounted() {
     const store = useStore()
       this.todos = store.getters.getTodos
-      console.log(this.todos)
+      var mths = ['Jan','Feb','March','April','May','June','July','August','Sept','Oct','Nov','Dec']
+
+      let strng = this.todos[4].total
+      console.log(typeof(strng))
   },
   data() {
   return { 
     todos: []
   }
 },
+methods: {
+   dates(due) {
+      var mths = ['Jan','Feb','March','April','May','June','July','August','Sept','Oct','Nov','Dec']
+
+      let rep = due.replace(/-/g,'')
+      let ars = rep.substring(4,6)
+      let ars1 = due.split('-').reverse()
+
+      let date = ars1[0]+' '+mths[ars - 1]+' '+ars1[2]
+      return date
+    },
+},
  
   computed: {
+   
     dones(){
        
       if(this.pick === 'all'){
+        
         return this.todos
       }
         return this.todos.filter(x => x.status === this.pick)
@@ -73,6 +90,9 @@ export default {
     /* background: #fff;
     color: #0C0e16; */
     box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.1);
+  }
+  .pos p, .sml1 p {
+    color: #fff;
   }
   .bdy:hover{
     box-shadow:inset 1px 1px 3px rgba(250, 250, 250, 0.3);
@@ -146,7 +166,7 @@ export default {
     } 
     .small .sml2 span,  .small .sml1 span{
       font-size: 14px;
-      color: rgba(172, 184, 159, 0.95);
+      color: rgba(244, 244, 244, 0.7);
       font-weight: 100;
     }
     .small .sml2 p {
@@ -173,7 +193,7 @@ export default {
     }
     .pos span{
       font-size: 14px;
-      color: rgba(172, 184, 159, 0.95);
+      color: rgba(244, 244, 244, 0.7);
       font-weight: 100;
     }
     .pos .total {

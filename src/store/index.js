@@ -45,7 +45,7 @@ export default createStore({
           paymentDue: payload.paymentDue,
           paymentTerms: payload.paymentTerms,
           total: payload.total,
-          clientAddress: {street: payload.clientAddress, city: payload.clientCity, country: payload.clientCountry, postCode: payload.clientPostCode},
+          clientAddress: {street: payload.clientStreet, city: payload.clientCity, country: payload.clientCountry, postCode: payload.clientPostCode},
           senderAddress: {street: payload.street, city: payload.city, country: payload.country, postCode: payload.postCode}
       }
       console.log(newTask.items)

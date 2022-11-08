@@ -37,7 +37,7 @@
           </label>
           <label class="nm4">
             <span>City</span>
-            <input type="text" name="" v-model="newInvoice.clientCity">
+            <input type="text" name="" v-model="newInvoice.clientCity" required>
           </label>
           <label class="nm7">
             <span>Post Code</span>
