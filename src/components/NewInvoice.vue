@@ -69,12 +69,14 @@
         </div>
 
         <p>Item List</p>
-        <div v-for="(item, x) in newInvoice.items" :key="x" class="disp">
+        <div class="dip">
+          <div v-for="(item, x) in newInvoice.items" :key="x" class="disp">
           <p>name<br><span>{{item.name}}</span></p>
-          <p>quantity<br><span>{{item.quantity}}</span></p>
+          <p>qty<br><span>{{item.quantity}}</span></p>
           <p>price<br><span>{{item.price}}</span></p>
           <p>total<br><span>{{item.total}}</span></p>
           <button @click.prevent="deleteItem(x)"><img src="../assets/icon-delete.svg" alt=""></button>
+        </div>
         </div>
         <div>
           <form @submit.prevent="newItem" class="labels label3">
@@ -105,19 +107,6 @@
   </template>
   
   <script>
-
-    const bun = document.querySelectorAll('button')[0]
-
-      const x = document.querySelectorAll('input')
-        console.log(bun)
-        const y = [...x].some(el => el.value == '')
-        // bun.disabled = true;
-        console.log(y)
-        if(y){
-        console.log('hello')
-        } else{
-        // bun.disabled = false;
-        }
 
   export default {
     props: {
@@ -230,8 +219,8 @@
         this.newInvoice.total = total
       },
       deleteItem(index){
-        const y = this.newInvoice.items.findIndex(x => x.index)
-        this.newInvoice.items.splice(y, 1)
+        let y = this.newInvoice.items.findIndex((x, i) => i == index)
+          return this.newInvoice.items.splice(y, 1)
       }
     },
     mounted() {
@@ -290,22 +279,47 @@
       grid-template-columns: 1fr 1fr;
       grid-auto-rows: minmax(40px, auto);
     }
-    .disp{
+    .dip{
+      position: relative;
+    }
+    .dip .disp{
+      position: relative;
       display: flex;
       flex-wrap: wrap;
-      /* grid-template-columns: 1fr 1fr; */
+      column-gap: 10px;
       justify-content: space-between;
       align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+    }
+    .disp::after{
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 1px;
+      background: rgba(100, 70, 220, 0.999);
+      left: 0;
+      bottom: 0;
     }
     .disp p{
+      /* flex-basis:100px; */
       color: white;
+    }
+    .disp button{
+      background: transparent;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      outline: none;
+      cursor: pointer;
+      border: 1px dashed  rgba(100, 70, 220, 0.999);;
     }
     .disp p span{
       color: darkgray;
       background:rgba(72, 84, 159, 0.15);
       padding: 12px;
       display: inline-block;
-      /* min-width: 100px; */
+      margin-top: 4px;
       border-radius: 8px;
     }
     div label{
