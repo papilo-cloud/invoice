@@ -12,7 +12,7 @@ export default createStore({
       // console.log(state.todos)
     }, 
     getFilters (state) {
-      return state.todos
+      return state.todos 
     },
     getTodosCount (state, getters) {
       return getters.getTodos.length

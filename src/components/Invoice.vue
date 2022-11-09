@@ -36,10 +36,7 @@ export default {
   mounted() {
     const store = useStore()
       this.todos = store.getters.getTodos
-      var mths = ['Jan','Feb','March','April','May','June','July','August','Sept','Oct','Nov','Dec']
-
-      let strng = this.todos[4].total
-      console.log(typeof(strng))
+      console.log(this.todos)
   },
   data() {
   return { 
@@ -93,6 +90,7 @@ methods: {
   }
   .pos p, .sml1 p {
     color: #fff;
+    font-size: 17px;
   }
   .bdy:hover{
     box-shadow:inset 1px 1px 3px rgba(250, 250, 250, 0.3);
@@ -104,8 +102,8 @@ methods: {
   .bdy .status span{
     position: relative;
     display: inline-block;
-    width: 8px;
-    height: 8px;
+    width: 7px;
+    height: 7px;
     background: #0C0e16;
     border-radius: 50%;
     top: 50%;
@@ -158,25 +156,27 @@ methods: {
    
 
     .small .sml2{
-      width: 140px;
+      width: 120px;
       /* display: flex;
       flex-direction: column; */
       /* align-items: flex-start; */
       text-align: right;
     } 
     .small .sml2 span,  .small .sml1 span{
-      font-size: 14px;
+      font-size: 12px;
+      font-weight: lighter;
       color: rgba(244, 244, 244, 0.7);
       font-weight: 100;
     }
     .small .sml2 p {
       position: relative;
-      padding: 14px;
+      padding: 13px;
       /* width: 100px; */
       text-align: center;
       border-radius: 10px;
       margin-top: 10px;
       right: 0;
+      font-size: 14px;
     }
     .pos{
       display: none;

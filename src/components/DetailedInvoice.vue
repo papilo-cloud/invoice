@@ -116,10 +116,6 @@ export default {
      this.datas = this.$store.getters.getTodoById(this.id)
      this.clientAddress = this.datas.clientAddress
      this.senderAddress = this.datas.senderAddress
-
-     console.log(this.datas)
-
-     console.log(this.clientAddress)
   },
 
   data() {
@@ -134,7 +130,6 @@ export default {
   methods: {
     datess(due) {
       var mths = ['Jan','Feb','March','April','May','June','July','August','Sept','Oct','Nov','Dec']
-      console.log(typeof(due))
       if(due){
       const rep = due.replace(/-/g,'')
       let ars = rep.substring(4,6)

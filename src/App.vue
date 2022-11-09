@@ -19,8 +19,8 @@ export default {
       // const store = useStore()
       //   this.todos = store.getters.todos
         // console.log(this.todos)
-      const store = useStore()
-		  store.commit('loadStore');
+      // const store = useStore()
+		  // store.commit('loadStore');
         // this.dele() 
     },
     beforeCreate() {

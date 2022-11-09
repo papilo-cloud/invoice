@@ -27,8 +27,11 @@
           </button>
         </div>
       </div>
-      <div class="bdy">
+      <div class="bdy" v-if="isEmp.length > 0 ">
         <Invoice :pick="pick"/>
+      </div>
+      <div v-else>
+        <empty />
       </div>
     </div>
   </template>
@@ -37,6 +40,7 @@
 import Invoice from '../components/Invoice.vue'
 import { mapGetters } from 'vuex';
 import NewInvoice from '../components/NewInvoice.vue';
+import Empty from '../components/Empty.vue';
 
   export default {
     name: 'invoices',
@@ -47,9 +51,10 @@ import NewInvoice from '../components/NewInvoice.vue';
         pick: 'all'
       }
     },
-    components: {
+    components: { 
       Invoice,
       NewInvoice,
+        Empty,
     },
   
     computed: {
@@ -70,10 +75,11 @@ import NewInvoice from '../components/NewInvoice.vue';
           const shw =  this.$store.getters.getTodos
           const ans = [...new Set(shw.map(x => x.status)) ]
           return ans
-          // console.log(ans)
+          // console.log(shw.length )
         },
         ...mapGetters({
-            done: "getTodosCount"
+            done: "getTodosCount",
+            isEmp: 'getTodos'
     }),
   }, 
   methods: {
@@ -117,6 +123,9 @@ import NewInvoice from '../components/NewInvoice.vue';
     .con h3{
       margin-bottom: 10px;
     }
+    .con p{
+      font-size: 17px;
+    }
     button{
       border: none;
       outline: none;
@@ -130,7 +139,7 @@ import NewInvoice from '../components/NewInvoice.vue';
       background: transparent;
       color: white;
       letter-spacing: 1px;
-      font-size: 18px;
+      font-size: 17px;
     }
      .imss{
       /* position: absolute; */

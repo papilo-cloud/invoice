@@ -64,7 +64,7 @@
           </label>
           <label class="nm3">
             <span>Project description </span>
-            <input type="text" name="" v-model="newInvoice.projectDescription" required>
+            <input type="text" name="" v-model="newInvoice.description" required>
           </label>
         </div>
 
@@ -75,7 +75,7 @@
           <p>qty<br><span>{{item.quantity}}</span></p>
           <p>price<br><span>{{item.price}}</span></p>
           <p>total<br><span>{{item.total}}</span></p>
-          <button @click.prevent="deleteItem(x)"><img src="../assets/icon-delete.svg" alt=""></button>
+          <button @click.prevent="deleteItem(x)"><img src="../assets/icon-delete.svg" alt="dele"></button>
         </div>
         </div>
         <div>
@@ -92,7 +92,7 @@
             <span>Price</span>
             <input type="number" name="nm" min="1" v-model="listItems.price">
           </label>
-          <button  type="submit">Add New Item</button>
+          <button  type="submit"><img src="../assets/icon-plus.svg" alt="plus"> Add New Item</button>
         </form>
         </div>
         <div class="sumbit">
@@ -112,7 +112,7 @@
     props: {
       show: String
     },
-    data() {
+    data() { 
       return{
         newInvoice: {
           street: '',
@@ -156,7 +156,7 @@
         this.$emit('atShow')
       },
     
-      draft(){
+      draft(){ 
         this.newId()
         this.invoiceDue()
         this.totalAmnt()
@@ -246,7 +246,7 @@
       position: fixed;
       left: 0%;
       bottom: 0;
-      width: 80%;
+      width: 100%;
       background: #141625;
       height: calc(100% - 4.5em);
       z-index: 100000;
@@ -314,6 +314,9 @@
       cursor: pointer;
       border: 1px dashed  rgba(100, 70, 220, 0.999);;
     }
+    .label3 button img {
+      margin-right: 12;
+    }
     .disp p span{
       color: darkgray;
       background:rgba(72, 84, 159, 0.15);
@@ -379,7 +382,7 @@
       grid-column: 1/3;
       grid-row:  4;
       border-radius: 24px;
-      background: rgba(100, 70, 220, 0.999);
+      background: rgba(0, 0, 0, 0.4);
       border: none;
       outline: none;
       color: white;
