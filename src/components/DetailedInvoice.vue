@@ -1,5 +1,6 @@
 <template>
   <div class="main-details">
+    <edit-form />
     <div class="dell">
       <h3>Confirm Deletion</h3>
       <p>Are you sure you want to Delete invoice No. <span>{{datas.id}}</span>? This action cannot be undone.</p>
@@ -8,7 +9,7 @@
         <button class="del" @click="deleteTodo(datas.id)">Confirm</button>
       </div>
     </div>
-  <div class="details">
+  <div class="details"> 
    
     <div class="btn">
       <button @click="backBtn"><img src="../assets/icon-arrow-left.svg" alt=""> Go back</button>
@@ -22,7 +23,7 @@
             <span :class="{paid: datas.status === 'paid', pending: datas.status === 'pending', draft: datas.status === 'draft'}"></span> {{datas.status}}</p>
         </div>
         <div class="bottom">
-          <button class="edt" v-if="datas.status !== 'paid'" @click="isEdit">Edit</button>
+          <button class="edt" v-if="datas.status !== 'paid'" @click="isEdit(datas)">Edit</button>
           <button class="del" @click="toggleDelete">Delete</button>
           <button class="mrk" v-if="datas.status === 'pending'" @click="toggleTodo(datas.id)">Mark as Paid</button>
         </div>
@@ -110,7 +111,9 @@
 </template>
 
 <script>
+import EditForm from './EditForm.vue'
 export default {
+  components: { EditForm },
   mounted() {
      const x = this.$store.getters.getTodoById(this.id)
      this.datas = this.$store.getters.getTodoById(this.id)
@@ -142,8 +145,10 @@ export default {
     backBtn() {
       this.$router.go(-1)
     },
-    isEdit(){
+    isEdit(index){
       alert('Still under construction...')
+      console.log(index)
+
     },
     deleteTodo(id) {
       this.$store.dispatch("deleteTodo", id);
