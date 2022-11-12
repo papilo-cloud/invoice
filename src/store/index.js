@@ -15,7 +15,7 @@ export default createStore({
       return state.todos 
     },
     getTodosCount (state, getters) {
-      return getters.getTodos.length
+      return getters.getTodos.length 
     },
     getTodoById: (state) => (id) => {
       return state.todos.find(todo => todo.id === id)
@@ -48,9 +48,30 @@ export default createStore({
           clientAddress: {street: payload.clientStreet, city: payload.clientCity, country: payload.clientCountry, postCode: payload.clientPostCode},
           senderAddress: {street: payload.street, city: payload.city, country: payload.country, postCode: payload.postCode}
       }
-      console.log(newTask.items)
+      // console.log(newTask.items)
 
       state.todos.unshift(newTask);
+    },
+    EDIT_TODO(state, payload){ 
+      const index = state.todos.findIndex(dos => dos.id === payload.id)
+      const newTask = {
+        id: payload.id,
+        clientEmail: payload.clientEmail,
+        status: payload.status,
+        clientName: payload.clientName,
+        createdAt: payload.createdAt,
+        items: payload.items,
+        description: payload.description,
+        paymentDue: payload.paymentDue,
+        paymentTerms: payload.paymentTerms,
+        total: payload.total,
+        clientAddress: {street: payload.clientStreet, city: payload.clientCity, country: payload.clientCountry, postCode: payload.clientPostCode},
+        senderAddress: {street: payload.street, city: payload.city, country: payload.country, postCode: payload.postCode}
+    }
+    console.log(newTask)
+
+    state.todos.splice(index, 1,newTask);
+      // index.status = 'paid'
     },
     DELE_TODO(state, payload) {
       const index = state.todos.findIndex(dos => dos.id === payload)
@@ -67,6 +88,9 @@ export default createStore({
     },
     toggleTodo(context,payload) {
       return context.commit('TOGGLE_TODO',payload)
+    },
+    editTodo(context, payload) {
+      return context.commit('EDIT_TODO', payload)
     },
     deleteTodo(context, payload) {
       return context.commit('DELE_TODO', payload)

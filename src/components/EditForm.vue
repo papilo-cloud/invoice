@@ -6,56 +6,56 @@
         <div class="label labels">
           <label class="nm1">
            <span> street Address</span>
-          <input type="text" name="" v-model="newInvoice.street" required>
+          <input type="text" name="" v-model="newInvoice.street" >
           </label>
           <label class="nm2">
             <span>City</span>
-            <input type="text" name="" v-model="newInvoice.city" required>
+            <input type="text" name="" v-model="newInvoice.city" >
           </label>
           <label class="nm3">
             <span>Post Code</span>
-            <input type="text" name="" v-model="newInvoice.postCode" required>
+            <input type="text" name="" v-model="newInvoice.postCode" >
           </label>
           <label class="nm4">
             <span>Country</span>
-            <input type="text" name="" v-model="newInvoice.country" required>
+            <input type="text" name="" v-model="newInvoice.country" >
           </label>
         </div>
           <p>Bill To</p>
         <div class="label1 labels">
           <label class="nm1">
             <span>Client's Name</span>
-          <input type="text" placeholder="name" v-model="newInvoice.clientName" required>
+          <input type="text" placeholder="name" v-model="newInvoice.clientName" >
           </label>
           <label class="nm2">
             <span>Client's Email</span>
-            <input type="text" name="" v-model="newInvoice.clientEmail" required>
+            <input type="text" name="" v-model="newInvoice.clientEmail" >
           </label>
           <label class="nm3">
             <span>Street Address </span>
-            <input type="text" name="" v-model="newInvoice.clientStreet" required>
+            <input type="text" name="" v-model="newInvoice.clientStreet" >
           </label>
           <label class="nm4">
             <span>City</span>
-            <input type="text" name="" v-model="newInvoice.clientCity" required>
+            <input type="text" name="" v-model="newInvoice.clientCity" >
           </label>
           <label class="nm7">
             <span>Post Code</span>
-            <input type="text" name="" v-model="newInvoice.clientPostCode" required>
+            <input type="text" name="" v-model="newInvoice.clientPostCode" >
           </label>
           <label class="nm8">
             <span>Country</span>
-            <input type="text" name="" v-model="newInvoice.clientCountry" required>
+            <input type="text" name="" v-model="newInvoice.clientCountry" >
           </label>
         </div>
         <div class="label2 labels">
           <label class="nm1">
             <span>Invoice Date</span>
-          <input type="date" v-model="newInvoice.createdAt" required>
+          <input type="date" v-model="newInvoice.createdAt" >
           </label>
           <label class="nm2">
             <span>Payment Terms</span>
-            <select class="nm2" v-model="newInvoice.paymentTerm"  required>
+            <select class="nm2" v-model="newInvoice.paymentTerm">
               <option value="one">Next 1 Days</option>
               <option value="seven">Next 7 Days</option>
               <option value="fourteen">Next 14 Days</option>
@@ -64,7 +64,7 @@
           </label>
           <label class="nm3">
             <span>Project description </span>
-            <input type="text" name="" v-model="newInvoice.description" required>
+            <input type="text" name="" v-model="newInvoice.description" >
           </label>
         </div>
 
@@ -82,7 +82,7 @@
           <form @submit.prevent="newItem" class="labels label3">
           <label class="nm1">
             <span>Item Name</span>
-          <input type="text" placeholder="name" v-model="listItems.name" id="lbl1" required >
+          <input type="text" placeholder="name" v-model="listItems.name" id="lbl1"  >
           </label>
           <label class="nm2">
             <span>Qty</span> 
@@ -109,29 +109,30 @@
 
   export default {
     props: {
-      show: String
+      show: String,
+      datas: Object
     },
     data() { 
       return{
         newInvoice: {
-          street: '',
-          city: '',
-          postCode: '',
-          country: '',
-          clientName: '',
-          clientEmail: '',
-          clientStreet: '',
-          clientCity: '',
-          clientPostCode: '',
-          clientCountry: '',
-          createdAt: new Date().toISOString().slice(0,10),
-          paymentTerm: "thirty",
-          description: '',
-          items : [],
-          total: 0,
-          status: "pending",
-          paymentDue: '',
-          id: '',
+          street: this.datas.senderAddress.street,
+          city: this.datas.senderAddress.city,
+          postCode: this.datas.senderAddress.postCode,
+          country: this.datas.senderAddress.country,
+          clientName: this.datas.clientName,
+          clientEmail: this.datas.clientEmail,
+          clientStreet: this.datas.clientAddress.street,
+          clientCity: this.datas.clientAddress.city,
+          clientPostCode: this.datas.clientAddress.postCode,
+          clientCountry: this.datas.clientAddress.country,
+          createdAt:this.datas.createdAt,
+          paymentTerm:this.datas.paymentTerm,
+          description:this.datas.description,
+          items : [...this.datas.items],
+          total:this.datas.total,
+          status: this.datas.status ,
+          paymentDue:this.datas.paymentDue,
+          id:this.datas.id,
         },
         listItems: {
           name: '',
@@ -141,35 +142,24 @@
         },
       }
     },
+  
     methods: {
       save() { 
-        this.newId()
+        // this.newId()
         this.invoiceDue()
         this.totalAmnt()
 
         const x = {
         ...this.newInvoice 
         };       
-        this.$store.dispatch("addTodo", x);
+        this.$store.dispatch("editTodo", x);
         this.newInvoice.items = []    
-        // this.$emit('atShow')
+        this.$emit('atShow')
+        this.$router.push('/')
       },
     
-      draft(){ 
-        this.newId()
-        this.invoiceDue()
-        this.totalAmnt()
-
-        const x = {
-        ...this.newInvoice ,
-          status: 'draft'
-        };       
-        this.$store.dispatch("addTodo", x);
-        this.newInvoice.items = []    
-        // this.$emit('atShow')
-      },
       discard(){
-        // this.$emit('atShow')
+        this.$emit('atShow')
       },
       newItem(){
         this.listItems.total = this.listItems.price * this.listItems.quantity
@@ -223,18 +213,13 @@
       }
     },
     mounted() {
-      const bun = document.querySelector('.bun2')
-      bun.disabled = true;
-
+      // const bun = document.querySelector('.bun2')
+      // bun.disabled = true;
+   
       // const x = document.querySelectorAll('input')
       //   console.log([...x].some(el => el.value == ''))
       //   const y = [...x].some(el => el.value == '')
-      //   console.log(y)
-      //   if(y){
-      //   console.log('hello')
-      //   } else{
-      //   bun.disabled = false;
-      //   }
+        console.log(this.datas)
     
     }
   }

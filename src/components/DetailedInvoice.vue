@@ -1,6 +1,6 @@
 <template>
   <div class="main-details">
-    <edit-form />
+    <edit-form :datas="datas" v-if="edit" @atShow="atShows" />
     <div class="dell">
       <h3>Confirm Deletion</h3>
       <p>Are you sure you want to Delete invoice No. <span>{{datas.id}}</span>? This action cannot be undone.</p>
@@ -23,7 +23,7 @@
             <span :class="{paid: datas.status === 'paid', pending: datas.status === 'pending', draft: datas.status === 'draft'}"></span> {{datas.status}}</p>
         </div>
         <div class="bottom">
-          <button class="edt" v-if="datas.status !== 'paid'" @click="isEdit(datas)">Edit</button>
+          <button class="edt" v-if="datas.status !== 'paid'" @click="isEdit">Edit</button>
           <button class="del" @click="toggleDelete">Delete</button>
           <button class="mrk" v-if="datas.status === 'pending'" @click="toggleTodo(datas.id)">Mark as Paid</button>
         </div>
@@ -49,7 +49,7 @@
       </div>
       <div class="three">
         <p>Invoice Date</p>
-        <h3>{{datess(datas.createdAt)}}</h3>
+        <h3>{{dates(datas.createdAt)}}</h3>
       </div>
       <div class="four">
         <p>Bill To</p>
@@ -65,7 +65,7 @@
       </div>
       <div class="six">
         <p>Payment Due</p>
-        <h3>{{ datess(datas.paymentDue)}}</h3>
+        <h3>{{ dates(datas.paymentDue)}}</h3>
       </div>
       <div class="calc">
         <div class="banner" v-for="(item, i) in datas.items" :key="i">
@@ -114,7 +114,7 @@
 import EditForm from './EditForm.vue'
 export default {
   components: { EditForm },
-  mounted() {
+  created() {
      const x = this.$store.getters.getTodoById(this.id)
      this.datas = this.$store.getters.getTodoById(this.id)
      this.clientAddress = this.datas.clientAddress
@@ -123,7 +123,8 @@ export default {
 
   data() {
     return {
-      datas: [],
+      datas: {},
+      edit: false,
       clientAddress: {},
       senderAddress: {},
       id: this.$route.params.id
@@ -131,7 +132,7 @@ export default {
   },
  
   methods: {
-    datess(due) {
+    dates(due) {
       var mths = ['Jan','Feb','March','April','May','June','July','August','Sept','Oct','Nov','Dec']
       if(due){
       const rep = due.replace(/-/g,'')
@@ -146,9 +147,11 @@ export default {
       this.$router.go(-1)
     },
     isEdit(index){
-      alert('Still under construction...')
       console.log(index)
-
+      this.edit = true
+    },
+    atShows(){
+      this.edit = !this.edit
     },
     deleteTodo(id) {
       this.$store.dispatch("deleteTodo", id);
