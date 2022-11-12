@@ -56,7 +56,7 @@ export default {
     box-sizing: border-box;
   }
   body{
-    font-family:'Recursive', sans-serif;
+    font-family:'Telex', sans-serif;
     position: relative;
     width: 100%;
     background: #141625;
