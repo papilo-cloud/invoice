@@ -6,52 +6,52 @@
         <div class="label labels">
           <label class="nm1">
            <span> street Address</span>
-          <input type="text" name="" v-model="newInvoice.street" >
+          <input type="text" name="" v-model="newInvoice.street" required>
           </label>
           <label class="nm2">
             <span>City</span>
-            <input type="text" name="" v-model="newInvoice.city" >
+            <input type="text" name="" v-model="newInvoice.city" required>
           </label>
           <label class="nm3">
             <span>Post Code</span>
-            <input type="text" name="" v-model="newInvoice.postCode" >
+            <input type="text" name="" v-model="newInvoice.postCode" required>
           </label>
           <label class="nm4">
             <span>Country</span>
-            <input type="text" name="" v-model="newInvoice.country" >
+            <input type="text" name="" v-model="newInvoice.country" required>
           </label>
         </div>
           <p>Bill To</p>
         <div class="label1 labels">
           <label class="nm1">
             <span>Client's Name</span>
-          <input type="text" placeholder="name" v-model="newInvoice.clientName" >
+          <input type="text" placeholder="name" v-model="newInvoice.clientName" required>
           </label>
           <label class="nm2">
             <span>Client's Email</span>
-            <input type="text" name="" v-model="newInvoice.clientEmail" >
+            <input type="text" name="" v-model="newInvoice.clientEmail" required>
           </label>
           <label class="nm3">
             <span>Street Address </span>
-            <input type="text" name="" v-model="newInvoice.clientStreet" >
+            <input type="text" name="" v-model="newInvoice.clientStreet" required>
           </label>
           <label class="nm4">
             <span>City</span>
-            <input type="text" name="" v-model="newInvoice.clientCity" >
+            <input type="text" name="" v-model="newInvoice.clientCity" required>
           </label>
           <label class="nm7">
             <span>Post Code</span>
-            <input type="text" name="" v-model="newInvoice.clientPostCode" >
+            <input type="text" name="" v-model="newInvoice.clientPostCode" required>
           </label>
           <label class="nm8">
             <span>Country</span>
-            <input type="text" name="" v-model="newInvoice.clientCountry" >
+            <input type="text" name="" v-model="newInvoice.clientCountry" required>
           </label>
         </div>
         <div class="label2 labels">
           <label class="nm1">
             <span>Invoice Date</span>
-          <input type="date" v-model="newInvoice.createdAt" >
+          <input type="date" v-model="newInvoice.createdAt" required>
           </label>
           <label class="nm2">
             <span>Payment Terms</span>
@@ -64,7 +64,7 @@
           </label>
           <label class="nm3">
             <span>Project description </span>
-            <input type="text" name="" v-model="newInvoice.description" >
+            <input type="text" name="" v-model="newInvoice.description" required>
           </label>
         </div>
 
@@ -82,7 +82,7 @@
           <form @submit.prevent="newItem" class="labels label3">
           <label class="nm1">
             <span>Item Name</span>
-          <input type="text" placeholder="name" v-model="listItems.name" id="lbl1"  >
+          <input type="text" placeholder="name" v-model="listItems.name" id="lbl1"  required>
           </label>
           <label class="nm2">
             <span>Qty</span> 
@@ -130,7 +130,7 @@
           description:this.datas.description,
           items : [...this.datas.items],
           total:this.datas.total,
-          status: this.datas.status ,
+          status: 'pending' ,
           paymentDue:this.datas.paymentDue,
           id:this.datas.id,
         },
@@ -145,8 +145,6 @@
   
     methods: {
       save() { 
-        // this.newId()
-        this.invoiceDue()
         this.totalAmnt()
 
         const x = {
@@ -158,7 +156,7 @@
         this.$router.push('/')
       },
     
-      discard(){
+      discard(){ 
         this.$emit('atShow')
       },
       newItem(){
@@ -173,34 +171,7 @@
         this.listItems.quantity = 0;
         this.listItems.total = 0
       },
-      newId() { 
-        const x = Math.random()*(90 - 65) + 65
-        const y = Math.random()*(90 - 65) + 65
-        const z = Math.floor(Math.random()*(9999 - 1000) + 1000)
-        return this.newInvoice.id = String.fromCharCode(x,y)+ z
-      },
-      invoiceDue() {
-        const b = Date.parse(this.newInvoice.createdAt)
-        // const IPOdate = new Date(b);
-        // The number of milliseconds in a day is calculated as (1000*60*60*24) 
-        const x = this.newInvoice.paymentTerm;
-        let y = 1000*60*60*24;
-        var z= 0
-
-        if(x === 'one'){
-          z = 1 * y
-        }
-        if(x === 'seven'){
-          z = 7 * y
-        }
-        if(x === 'fourteen'){
-          z = 14 * y
-        }
-        if(x === 'thirty'){
-          z = 30 * y
-        }
-        return this.newInvoice.paymentDue = new Date(b + z).toISOString().slice(0,10)
-      },
+    
       totalAmnt() {
         const total = this.newInvoice.items
         .map(x => x.total)
@@ -401,7 +372,7 @@
       border: none;
       padding: 14px;
       border-radius: 24px;
-      font-size: 9px;
+      /* font-size: 9px; */
       color: white;
     }
     .sumbit .bun {

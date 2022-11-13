@@ -146,7 +146,7 @@ export default {
     backBtn() {
       this.$router.go(-1)
     },
-    isEdit(index){
+    isEdit(index){ 
       console.log(index)
       this.edit = true
     },

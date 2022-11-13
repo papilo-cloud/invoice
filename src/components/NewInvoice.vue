@@ -112,7 +112,7 @@
     props: {
       show: String
     },
-    data() { 
+    data() {  
       return{
         newInvoice: {
           street: '',
